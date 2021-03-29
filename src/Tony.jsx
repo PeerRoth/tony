@@ -1,23 +1,76 @@
 import React , { useState } from 'react'
-import { Row , Col , Container } from 'react-bootstrap'
-// import { Note, Interval, Scale } from "@tonaljs/tonal";
+import { Row , Col , Container , Form } from 'react-bootstrap'
 import * as Tone from 'tone'
-import Button from 'react-bootstrap/Button';
+import A from './components/a.jsx'
+
+    const hexest = [
+                        'f72585' ,
+                        'b5179e' ,
+                        '7209b7' ,
+                        '560bad' ,
+                        '480ca8' ,
+                        '3a0ca3' ,
+                        '3f37c9' ,
+                        '4361ee' ,
+                        '4895ef' ,
+                        '4cc9f0'
+                    ]
+
+                    
+let anOctaveOfDiatonicNotes = [
+    ['E4'	        , 329.63 ,	104.66 ]    ,
+    // ['F4'	        , 349.23 ,	98.79 ] ,
+    // ['F#4/Gb4' 	, 369.99 ,	93.24 ] ,
+    ['G4'	        , 392.00 ,	88.01 ] ,
+    // ['G#4/Ab4' 	, 415.30 ,	83.07 ] ,
+    // ['A4'	        , 440.00 ,	78.41 ] ,
+    // ['A#4/Bb4' 	, 466.16 ,	74.01 ] ,
+    ['B4'	        , 493.88 ,	69.85 ] ,
+    ['G4'	        , 392.00 ,	88.01 ] ,
+    ['E4'	        , 329.63 ,	104.66 ]    ,
+    // ['F4'	        , 349.23 ,	98.79 ] ,
+    // ['F#4/Gb4' 	, 369.99 ,	93.24 ] ,
+    ['G4'	        , 392.00 ,	88.01 ] ,
+    // ['G#4/Ab4' 	, 415.30 ,	83.07 ] ,
+    // ['A4'	        , 440.00 ,	78.41 ] ,
+    // ['A#4/Bb4' 	, 466.16 ,	74.01 ] ,
+    ['B4'	        , 493.88 ,	69.85 ] ,
+    ['G4'	        , 392.00 ,	88.01 ] ,
+    ['E4'	        , 329.63 ,	104.66 ]    ,
+    ['G4'	        , 392.00 ,	88.01 ] ,
+    ['E4'	        , 329.63 ,	104.66 ]    ,
+    ['G4'	        , 392.00 ,	88.01 ] ,
+    ['E4'	        , 329.63 ,	104.66 ]    ,
+    ['F4'	        , 349.23 ,	98.79 ] ,
+    // ['F#4/Gb4' 	, 369.99 ,	93.24 ] ,
+    ['G4'	        , 392.00 ,	88.01 ] ,
+    ['G#4/Ab4' 	, 415.30 ,	83.07 ] ,
+    ['A4'	        , 440.00 ,	78.41 ] ,
+    ['A#4/Bb4' 	, 466.16 ,	74.01 ] ,
+    ['B4'	        , 493.88 ,	69.85 ] ,
+    ['G4'	        , 392.00 ,	88.01 ] ,
+    ['E4'	        , 329.63 ,	104.66 ]    ,
+    ['F4'	        , 349.23 ,	98.79 ] ,
+    // ['F#4/Gb4' 	, 369.99 ,	93.24 ] ,
+    ['G4'	        , 392.00 ,	88.01 ] ,
+    // ['G#4/Ab4' 	, 415.30 ,	83.07 ] ,
+    // ['A4'	        , 440.00 ,	78.41 ] ,
+    // ['A#4/Bb4' 	, 466.16 ,	74.01 ] ,
+    ['B4'	        , 493.88 ,	69.85 ] ,
+    ['G4'	        , 392.00 ,	88.01 ] ,
+    ['C5'	        , 523.25 ,	65.93 ] ,
+    // ['C#5/Db5' 	, 554.37 ,	62.23 ] ,
+    ['D5'	        , 587.33 ,	58.74 ] ,
+    // ['D#5/Eb5' 	, 622.25 ,	55.44 ] ,
+    ['E5'	        , 659.25 ,	52.33 ] 
+    ];
+
+
 
 
 export default function Tony( props ) {
 
-    const hexest = [
-        "f72585",
-    "b5179e",
-    "7209b7",
-    "560bad",
-    "480ca8",
-    "3a0ca3",
-    "3f37c9",
-    "4361ee",
-    "4895ef",
-    "4cc9f0"]
+
     const { setBar } =                  props;
     var [ wantBars , setWantBars ] =    useState( false )
     var [ bars , setBars ] =            useState( false )
@@ -26,7 +79,7 @@ export default function Tony( props ) {
     // const [ bar , setBar ] = useState( 0 );
     
     async function playNote( m ) {
-        const synth = new Tone.FMSynth( ).toDestination( );
+        const synth = new Tone.AMSynth( ).toDestination( );
         if ( !Array.isArray( m ) ) {      
         // let promiseNote = await Tone.start( );
             console.log( 'PLAYINGN SINGLEL NOTE' )
@@ -50,61 +103,12 @@ export default function Tony( props ) {
     }
 
 
-    function playShit( ) {
+    function playShit( passedArray ) {
         const now = Tone.now( )
      
-let anOctaveOfDiatonicNotes = [
-    ['E4'	        , 329.63 ,	104.66 ]    ,
-    // ['F4'	        , 349.23 ,	98.79 ] ,
-    // ['F#4/Gb4' 	, 369.99 ,	93.24 ] ,
-    ['G4'	        , 392.00 ,	88.01 ] ,
-    // ['G#4/Ab4' 	, 415.30 ,	83.07 ] ,
-    // ['A4'	        , 440.00 ,	78.41 ] ,
-    // ['A#4/Bb4' 	, 466.16 ,	74.01 ] ,
-    ['B4'	        , 493.88 ,	69.85 ] ,
-    ['G4'	        , 392.00 ,	88.01 ] ,
-    ['E4'	        , 329.63 ,	104.66 ]    ,
-// ['F4'	        , 349.23 ,	98.79 ] ,
-// ['F#4/Gb4' 	, 369.99 ,	93.24 ] ,
-['G4'	        , 392.00 ,	88.01 ] ,
-// ['G#4/Ab4' 	, 415.30 ,	83.07 ] ,
-// ['A4'	        , 440.00 ,	78.41 ] ,
-// ['A#4/Bb4' 	, 466.16 ,	74.01 ] ,
-['B4'	        , 493.88 ,	69.85 ] ,
-['G4'	        , 392.00 ,	88.01 ] ,
-['E4'	        , 329.63 ,	104.66 ]    ,
-['G4'	        , 392.00 ,	88.01 ] ,
-['E4'	        , 329.63 ,	104.66 ]    ,
-['G4'	        , 392.00 ,	88.01 ] ,
-['E4'	        , 329.63 ,	104.66 ]    ,
-['F4'	        , 349.23 ,	98.79 ] ,
-['F4'	        , 349.23 ,	98.79 ] ,
-['F4'	        , 349.23 ,	98.79 ] ,
-// ['F#4/Gb4' 	, 369.99 ,	93.24 ] ,
-['G4'	        , 392.00 ,	88.01 ] ,
-// ['G#4/Ab4' 	, 415.30 ,	83.07 ] ,
-// ['A4'	        , 440.00 ,	78.41 ] ,
-// ['A#4/Bb4' 	, 466.16 ,	74.01 ] ,
-['B4'	        , 493.88 ,	69.85 ] ,
-['G4'	        , 392.00 ,	88.01 ] ,
-['E4'	        , 329.63 ,	104.66 ]    ,
-['F4'	        , 349.23 ,	98.79 ] ,
-// ['F#4/Gb4' 	, 369.99 ,	93.24 ] ,
-['G4'	        , 392.00 ,	88.01 ] ,
-// ['G#4/Ab4' 	, 415.30 ,	83.07 ] ,
-// ['A4'	        , 440.00 ,	78.41 ] ,
-// ['A#4/Bb4' 	, 466.16 ,	74.01 ] ,
-['B4'	        , 493.88 ,	69.85 ] ,
-['G4'	        , 392.00 ,	88.01 ] ,
-['C5'	        , 523.25 ,	65.93 ] ,
-// ['C#5/Db5' 	, 554.37 ,	62.23 ] ,
-['D5'	        , 587.33 ,	58.74 ] ,
-// ['D#5/Eb5' 	, 622.25 ,	55.44 ] ,
-['E5'	        , 659.25 ,	52.33 ] 
-    ]
 
     let duration = .175;
-    let transcribed = anOctaveOfDiatonicNotes.map( (  x , y ) => {
+    let transcribed = passedArray.map( (  x , y ) => {
         return (
 
             { n : x[ 1 ].toFixed( 0 ) , o : duration , p : y === 0 ? now : (now + ( duration * y * 1.1 )) }
@@ -115,7 +119,7 @@ let anOctaveOfDiatonicNotes = [
     
         playNote( transcribed )
        
-        playNote( bars ) 
+        // playNote( bars ) 
         }
 
 
@@ -152,16 +156,15 @@ let anOctaveOfDiatonicNotes = [
 
             <Row>
                 <Col>
+                <br />
 
                     <Row>
-                        <Col>
+                        <A player={ playShit }
+                            notes={ anOctaveOfDiatonicNotes }
+                            message={ 'e-g-b-g' }
+                        />
 
-                            <Button variant='dark' 
-                                    onClick={ playShit }
-                                    >
-                                { 'C4>8n' }
-                            </Button>
-                        </Col>
+                        
                     </Row>
 
 
@@ -219,7 +222,37 @@ let anOctaveOfDiatonicNotes = [
                     <Row>
                         <Col>
                     
-                    
+                        <Form>
+  <Form.Group controlId="exampleForm.ControlInput1">
+    <Form.Label>Email address</Form.Label>
+    <Form.Control type="email" placeholder="name@example.com" />
+  </Form.Group>
+  <Form.Group controlId="exampleForm.ControlSelect1">
+    <Form.Label>Example select</Form.Label>
+    <Form.Control as="select">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </Form.Control>
+  </Form.Group>
+  <Form.Group controlId="exampleForm.ControlSelect2">
+    <Form.Label>Example multiple select</Form.Label>
+    <Form.Control as="select" multiple>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </Form.Control>
+  </Form.Group>
+  <Form.Group controlId="exampleForm.ControlTextarea1">
+    <Form.Label>Example textarea</Form.Label>
+    <Form.Control as="textarea" rows={3} />
+  </Form.Group>
+</Form>
+
                         </Col>
                     
                     </Row>
