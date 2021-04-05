@@ -14,7 +14,7 @@ export default function A( props ) {
             <Row>
                 <Col>
                     <Button variant='dark' 
-                            onClick={ ( ) => { player( notes ) } }
+                            onClick={ ( ) => { player( notes , .07 ) } }
                             >
                     { message }
                     </Button>
@@ -25,7 +25,8 @@ export default function A( props ) {
                 {
                     notes
                     ?
-                    <Col>
+                    <Col
+                    style={ { fontSize : '.8rem' } } >
                         <Row>
                         <Col>
                                 name

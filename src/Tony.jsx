@@ -1,5 +1,5 @@
 import React , { useState } from 'react'
-import { Row , Col , Container , Form } from 'react-bootstrap'
+import { Row , Col , Container , Button , Form } from 'react-bootstrap'
 import * as Tone from 'tone'
 import A from './components/a.jsx'
 
@@ -15,7 +15,6 @@ import A from './components/a.jsx'
                         '4895ef' ,
                         '4cc9f0'
                     ]
-
                     
 let anOctaveOfDiatonicNotes = [
     ['E4'	        , 329.63 ,	104.66 ]    ,
@@ -68,26 +67,27 @@ let anOctaveOfDiatonicNotes = [
 
 
 
-export default function Tony( props ) {
 
+
+
+
+export default function Tony( props ) {
 
     const { setBar } =                  props;
     var [ wantBars , setWantBars ] =    useState( false )
     var [ bars , setBars ] =            useState( false )
     var [ het , setHet ] = useState( 10 )
     var [ beg , setBeg ] = useState( hexest[ 0 ] )
-    // const [ bar , setBar ] = useState( 0 );
+    const [ noteDuration , setNoteDuration ] = useState( .1 )
     
     async function playNote( m ) {
         const synth = new Tone.AMSynth( ).toDestination( );
-        if ( !Array.isArray( m ) ) {      
-        // let promiseNote = await Tone.start( );
-            console.log( 'PLAYINGN SINGLEL NOTE' )
-            let res = synth.triggerAttackRelease( m.n , m.o );
-            console.log( res )
-        } else {
+        // if ( !Array.isArray( m ) ) {      
+        //     console.log( 'PLAYINGN SINGLEL NOTE' )
+        //     let res = synth.triggerAttackRelease( m.n , m.o );
+        //     console.log( res )
+        // } else {
             console.log( 'array uv notes' )
-            // let now = Tone.now( );
             m.forEach( ( a , b ) => {
                 console.log( a.n )
                 setHet( a.n )
@@ -98,59 +98,54 @@ export default function Tony( props ) {
                 let res = synth.triggerAttackRelease( a.n , a.o  , a.p )
                 console.log( res.frequency.input.input.value )
             } )
-        // Tone.Unit.Time/
+        // }
+    }
+
+
+
+    function handleNoteDurationAdjustment( evurnt ) {
+        console.log( evurnt )
+        if ( parseInt( evurnt.target.value ) ) {
+            setNoteDuration( parseInt( evurnt.target.value ) )
         }
     }
 
 
-    function playShit( passedArray ) {
+    function playShit( passedArray , duracione ) {
         const now = Tone.now( )
-     
-
-    let duration = .175;
-    let transcribed = passedArray.map( (  x , y ) => {
-        return (
-
+        let duration = typeof duracione !== 'undefined' ? duracione : .75;
+        let transcribed = passedArray.map( (  x , y ) => ( 
             { n : x[ 1 ].toFixed( 0 ) , o : duration , p : y === 0 ? now : (now + ( duration * y * 1.1 )) }
-            // { n : x[ 1 ].toFixed( 0 ) , o : .4 , p : y === 0 ? now : now + ( .4 * y ) }
-
-        )
-    } )
-    
+        ) )
         playNote( transcribed )
-       
-        // playNote( bars ) 
-        }
+    }
 
 
-        function Bar( props ) {
-            return (
+    function Bar( props ) {
+        return (
+            <div
+                style={ { 
+                    position        : 'fixed'    ,
+                    left            : props.lt   ,
+                    height          : props.ht      ,
+                    width           : '10px'       ,
+                    backgroundColor : 'yellow'      ,
+                    margin          : '0px' ,
+                    display         : 'inline' ,
+                    fontSize        : '.8rem'
+                } }
+                >.
+            </div>
+        )
+    }
 
-                <div
-                    style={ { 
-                        position        : 'fixed'    ,
-                        left            : props.lt   ,
-                        height          : props.ht      ,
-                        width           : '10px'       ,
-                        backgroundColor : 'yellow'      ,
-                        margin          : '0px' ,
-                        display         : 'inline' ,
-                        fontSize        : '.8rem'
-                    } }
-                    >.
-                </div>
 
-            )
-        }
-        // const player = new Tone.Player({
-        //     url: "https://tonejs.github.io/audio/drum-samples/loops/ominous.mp3",
-        //     autostart: true,
-        // });
-        // const filter = new Tone.Filter(400, 'lowpass').toDestination();
-        // const feedbackDelay = new Tone.FeedbackDelay(0.125, 0.5).toDestination();
-        // connect the player to the feedback delay and filter in parallel
-        // player.connect(filter);
-        // player.connect(feedbackDelay);
+
+
+
+
+
+
     return (
         <Container>
 
@@ -163,8 +158,6 @@ export default function Tony( props ) {
                             notes={ anOctaveOfDiatonicNotes }
                             message={ 'e-g-b-g' }
                         />
-
-                        
                     </Row>
 
 
@@ -178,80 +171,74 @@ export default function Tony( props ) {
                                     backgroundColor : beg ,
                                     width : '150px' ,
                                     height : ( het / 5 ) + 'px'
-
                                 } } >
 
                                 </div>
                         </Col>
                     </Row>
 
-
-                    {/* <Row>
-                        <Col> */}
                         {
                         wantBars
-
                         ?
                         <div
                         style={ { width : '90vw' } }>
                             {
                             bars.map( ( a , b ) => {
                                 return (
-                            <Bar
-                                key={ 'bar' + b }
-                                lt={ b * 10 }
-                                ht={ a.n }
-                                />
-                                )
-                            } )
-                        }
-                        </div>
-                                
-                                :
-                                <></>
-
-
-                            }
-                    
-                    
-                        {/* </Col>
-                    </Row> */}
-
-
+                        <Bar
+                            key={ 'bar' + b }
+                            lt={ b * 10 }
+                            ht={ a.n }
+                            />
+                            )
+                        } )
+                    }
+                    </div>
+                    :
+                    <></>
+                    }
 
                     <Row>
-                        <Col>
-                    
-                        <Form>
-  <Form.Group controlId="exampleForm.ControlInput1">
-    <Form.Label>Email address</Form.Label>
-    <Form.Control type="email" placeholder="name@example.com" />
-  </Form.Group>
-  <Form.Group controlId="exampleForm.ControlSelect1">
-    <Form.Label>Example select</Form.Label>
-    <Form.Control as="select">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </Form.Control>
-  </Form.Group>
-  <Form.Group controlId="exampleForm.ControlSelect2">
-    <Form.Label>Example multiple select</Form.Label>
-    <Form.Control as="select" multiple>
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </Form.Control>
-  </Form.Group>
-  <Form.Group controlId="exampleForm.ControlTextarea1">
-    <Form.Label>Example textarea</Form.Label>
-    <Form.Control as="textarea" rows={3} />
-  </Form.Group>
-</Form>
+                        <Col
+                            style={ { padding : '3rem' } }>
+
+                            <Button onClick={ playShit } >set Dat { typeof noteDuration !== 'undefined' ? noteDuration : '' }</Button>
+                                                
+                            <Form>
+                                <Form.Group controlId="exampleForm.ControlInput1">
+                                    <Form.Label>note duration</Form.Label>
+                                    <Form.Control
+                                        name='dure'
+                                        // va/lue={ noteDuration }
+                                        onChange={ handleNoteDurationAdjustment } 
+                                        type="text" placeholder="1 , 1.2 , 01.20 , etc . .  .   ." 
+                                    />
+                                </Form.Group>
+                            {/* <Form.Group controlId="exampleForm.ControlSelect1"> */}
+                                {/* <Form.Label>Example select</Form.Label>
+                                <Form.Control as="select">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group controlId="exampleForm.ControlSelect2">
+                                <Form.Label>Example multiple select</Form.Label>
+                                <Form.Control as="select" multiple>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                                <Form.Label>Example textarea</Form.Label>
+                                <Form.Control as="textarea" rows={3} />
+                            </Form.Group> */}
+                            </Form>
 
                         </Col>
                     
