@@ -8,15 +8,22 @@ import Row      from 'react-bootstrap/Row';
 export default function A( props ) {
 
     const { player , notes , message } = props;
+    
+    function handleNoteClick( aNote ) {
+        player( [ aNote ] , .2 );
+    };
+
+
 
     return (
         <Col>
             <Row>
                 <Col>
-                    <Button variant='dark' 
-                            onClick={ ( ) => { player( notes , .07 ) } }
-                            >
-                    { message }
+                    <Button 
+                        variant='dark' 
+                        onClick={ ( ) => { player( notes , .07 ) } }
+                        >
+                        { message }
                     </Button>
                 </Col>
             </Row>
@@ -26,18 +33,36 @@ export default function A( props ) {
                     notes
                     ?
                     <Col
-                    style={ { fontSize : '.8rem' } } >
+                        style={ { 
+                            fontSize : '.8rem' ,
+                            cursor : 'pointer' ,
+                        } } 
+                        >
                         <Row>
-                        <Col>
+                            <Col>
                                 name
-                            </Col>                            <Col>
+                            </Col>                            
+                            <Col>
                                 frequency
-                            </Col>                            <Col>
+                            </Col>                            
+                            <Col>
                                 wavelength
                             </Col>
                         </Row>
+
                         { 
-                        notes.map( ( a , b ) => ( <Row>{ a.map( ab => ( <Col>{ ab }</Col> ) ) }</Row> ) )
+                        notes.map( ( a , b ) => ( 
+                        <Row 
+                            key={ b + 'note' } 
+                            onClick={ ( ) => { handleNoteClick( a ); } }
+                            >
+                            { a.map( ab => ( 
+                            <Col key={ ab + 'as' } >
+                                { ab }
+                            </Col> 
+                            ) ) }
+                        </Row> 
+                        ) )
                         }
                     </Col>
                     :
@@ -47,4 +72,4 @@ export default function A( props ) {
             </Row>
         </Col>
     )
-}
+};
